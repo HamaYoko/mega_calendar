@@ -47,7 +47,7 @@ class CalendarController < ApplicationController
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'user') + '</td>'
-    ret_var << '<td>' + issue.assigned_to.login + '</td>' rescue '<td></td>'
+    ret_var << '<td>' + issue.subject + '</td>' rescue '<td></td>'
     ret_var << '</tr>'
     ret_var << '<tr>'
     ret_var << '<td>' + (translate 'start') + '</td>'
@@ -99,7 +99,9 @@ class CalendarController < ApplicationController
         i.due_date = i.start_date
       end
       color = '#' + UserColor.where({:user_id => i.assigned_to_id}).first.color_code rescue def_color
-      i_event = {:id => i.id.to_s, :controller_name => 'issue', :title => i.id.to_s + ' - ' + i.subject, :start => i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url => Setting.plugin_mega_calendar['sub_path'] + 'issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
+      
+
+       i_event = {:id => i.id.to_s, :controller_name => 'issue', :title => i.id.to_s + ' - ' + i.subject, :start =>           i.start_date.to_date.to_s + tbegin, :end => i.due_date.to_date.to_s + tend, :color => color, :url =>          Setting.plugin_mega_calendar['sub_path'] + 'issues/' + i.id.to_s, :className => css_classes, :description => form_issue(i) }
       if tbegin.blank? || tend.blank?
         i_event[:allDay] = true
         if !i.due_date.blank? && tend.blank?
